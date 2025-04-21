@@ -1,0 +1,26 @@
+<div class="login-container">
+    <div class="login-card">
+        <div routerLink="/" class="logo">Daily Drift</div>
+        <h2 class="login-title">Login</h2>
+        <form [formGroup]="formData" (ngSubmit)="handleSubmit()">
+            <input type="email" placeholder="Email" name="email" formControlName="email" />
+            <label *ngIf="email?.invalid && email?.touched" class="error">
+                <span *ngIf="email?.errors?.['required']">Email is required.</span>
+                <span *ngIf="email?.errors?.['email']">Invalid email format.</span>
+            </label>
+
+            <input type="password" placeholder="Password" name="password" formControlName="password" />
+            <label *ngIf="password?.invalid && password?.touched" class="error">
+                <span *ngIf="password?.errors?.['required']">Password is required.</span>
+                <span *ngIf="password?.errors?.['minlength']">Password must be at least 4 characters.</span>
+            </label>
+
+            <button type="submit" class="login-btn">Login</button>
+            <button type="button" (click)="handleGoogle()" class="google-btn">Login with Google</button>
+
+            <p class="login-switch">
+                Don't have an account? <a routerLink="/signup">Sign Up</a>
+            </p>
+        </form>
+    </div>
+</div>

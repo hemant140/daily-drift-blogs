@@ -1,0 +1,19 @@
+<main>
+    <div *ngIf="isLoading" class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+
+    <div class="blog-container" *ngIf="!isLoading && blogList.length > 0">
+        <div class="blog-card" *ngFor="let blog of blogList">
+            <img [src]="blog.image" alt="Blog Image" />
+            <div class="card-body">
+                <span class="tag">{{ blog.tag }}</span>
+                <h3 class="title">{{ blog.title }}</h3>
+                <div class="topics">
+                    <span class="topic" *ngFor="let topic of blog.topics">{{ topic }}</span>
+                </div>
+                <button [routerLink]="['/blog-post', blog.blogPostId]" class="read-more">Read more</button>
+            </div>
+        </div>
+    </div>
+</main>

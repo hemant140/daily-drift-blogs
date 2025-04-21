@@ -1,0 +1,90 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    position: relative;
+
+    .logo {
+        font-size: 28px;
+        font-weight: 800;
+        background: linear-gradient(to right, #f7c04ac0, #f38816d6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-family: 'Pacifico', cursive;
+        cursor: pointer;
+    }
+
+    .auth-buttons,
+    .user-info {
+        display: flex;
+        align-items: center;
+
+        .btn {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 20px;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+
+            &:hover {
+                background: linear-gradient(to right, #f7c04ac0, #f38816d6);
+            }
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #f7c04a, #f78c1c);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(to right, #f74d4a, #f7321c);
+            color: white;
+        }
+    }
+
+    .user-info-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 40px;
+        flex: 1;
+    }
+
+    .center-button {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .avatar {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                object-fit: cover;
+                border: 2px solid #f7c04a;
+            }
+
+            span {
+                font-weight: 600;
+                font-size: 16px;
+                color: #333;
+            }
+        }
+    }
+}

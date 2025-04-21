@@ -1,0 +1,18 @@
+<header class="header">
+    <div routerLink="/" class="logo">Daily Drift</div>
+    <div class="auth-buttons" *ngIf="!isLoggedIn">
+        <button routerLink="/login" class="btn">Login</button>
+        <button routerLink="/signup" class="btn btn-primary">Signup</button>
+    </div>
+
+    <div class="user-info" *ngIf="isLoggedIn">
+        <button routerLink="/blog-post" class="btn btn-primary">My Blogs</button>
+        <div class="profile">
+            <img [src]="user?.avatar || defaultAvatar" alt="Profile" class="avatar" />
+            <span>{{ user?.name }}</span>
+        </div>
+        <button class="btn btn-danger" (click)="logout()">Logout</button>
+
+
+    </div>
+</header>

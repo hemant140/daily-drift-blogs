@@ -1,0 +1,18 @@
+<main class="blog-detail-container" *ngIf="blog">
+    <div class="blog-detail-card">
+        <img [src]="blog.image" alt="Blog Image" class="blog-image" />
+        <div class="content">
+            <span class="tag">{{ blog.tag }}</span>
+            <h1 class="title">{{ blog.title }}</h1>
+            <p class="author">By {{ blog?.author?.name }}</p>
+
+            <div class="topics">
+                <span class="topic" *ngFor="let topic of blog.topics">{{ topic }}</span>
+            </div>
+
+            <p class="description">{{ blog.description }}</p>
+
+            <button routerLink="/" class="back-button">← Back to Home</button>
+        </div>
+    </div>
+</main>

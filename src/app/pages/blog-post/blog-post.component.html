@@ -1,0 +1,68 @@
+<div class="my-blogs-container">
+
+    <div class="top-bar">
+        <h2>My Blogs</h2>
+        <button class="add-blog-btn" (click)="addBlog()">Add New Blog</button>
+    </div>
+
+    <div *ngIf="isLoading" class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+    <div *ngIf="!isLoading && userblogsList.length === 0" class="no-blogs-message">
+        <p>Looks like your blog is empty. Go ahead and add your first post!</p>
+    </div>
+    <div class="blog-container" *ngIf="!isLoading && userblogsList.length > 0">
+        <div class="blog-card" *ngFor="let blog of userblogsList">
+            <img [src]="blog.image" alt="Blog Image" />
+            <div class="card-body">
+                <span class="tag">{{ blog.tag }}</span>
+                <h3 class="title">{{ blog.title }}</h3>
+                <div class="topics">
+                    <span class="topic" *ngFor="let topic of blog.topics">{{ topic }}</span>
+                </div>
+                <button [routerLink]="['/blog-post', blog.blogPostId]" class="read-more">Read more</button>
+
+
+                <div class="card-actions">
+                    <button class="edit-btn" (click)="editBlog(blog)">Edit</button>
+                    <button class="delete-btn" (click)="deleteBlog(blog.blogPostId)">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" [class.show]="showModal">
+        <div class="modal-content">
+            <h3>{{ selectedBlog ? 'Edit Blog' : 'Add Blog' }}</h3>
+            <form class="model-form" (ngSubmit)="handleSubmit()" #blogForm="ngForm">
+                <label>Title</label>
+                <input type="text" placeholder="Title" [(ngModel)]="form.title" name="title" required />
+                <div class="error" *ngIf="formErrors.title">Title is required</div>
+
+                <label>Tag</label>
+                <input type="text" placeholder="Tag" [(ngModel)]="form.tag" name="tag" required />
+                <div class="error" *ngIf="formErrors.title">Tag is required</div>
+
+                <label>Topics</label>
+                <input type="text" placeholder="Topics (comma separated)" [(ngModel)]="form.topics" name="topics" />
+                <div class="error" *ngIf="formErrors.title">Topics is required</div>
+
+                <label>Blog Image</label>
+                <input type="file" (change)="onImageChange($event)" />
+                <div class="error" *ngIf="formErrors.title">Blog image is required</div>
+
+                <label>Description</label>
+                <textarea placeholder="Description" [(ngModel)]="form.description" rows="10" name="description"
+                    required></textarea>
+                <div class="error" *ngIf="formErrors.title">Description is required</div>
+                <div class="model-btn">
+                    <button type="submit" [disabled]="isUploading">
+                        {{ isUploading ? 'Image Uploading...' : (selectedBlog ? 'Update' : 'Create') }}
+                    </button>
+                    <button type="button" (click)="closeModal()">Cancel</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
