@@ -11,16 +11,6 @@
             font-weight: 700;
         }
 
-        .add-blog-btn {
-            padding: 10px 20px;
-            background: linear-gradient(to right, #fca311, #ff7f50);
-            border: none;
-            border-radius: 30px;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
         .add-blog-btn:hover {
             opacity: 0.9;
         }
@@ -32,6 +22,16 @@
         color: #888;
         margin-top: 40px;
     }
+}
+
+.add-blog-btn {
+    padding: 10px 20px;
+    background: linear-gradient(to right, #fca311, #ff7f50);
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 

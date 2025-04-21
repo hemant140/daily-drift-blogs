@@ -10,6 +10,7 @@
     </div>
     <div *ngIf="!isLoading && userblogsList.length === 0" class="no-blogs-message">
         <p>Looks like your blog is empty. Go ahead and add your first post!</p>
+        <button routerLink="/" class="add-blog-btn">← Back to Home</button>
     </div>
     <div class="blog-container" *ngIf="!isLoading && userblogsList.length > 0">
         <div class="blog-card" *ngFor="let blog of userblogsList">

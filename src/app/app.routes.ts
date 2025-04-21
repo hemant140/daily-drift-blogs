@@ -5,7 +5,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { BlogPostComponent } from './pages/blog-post/blog-post.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 import { BlogDetailsComponent } from './pages/blog-details/blog-details.component';
-import { AuthGuard } from './gaurd/auth.gaurd';
+import { AuthGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
     { path: '', component: HomeComponent },
