@@ -52,20 +52,6 @@
                 font-size: 13px;
             }
         }
-
-        .read-more {
-            padding: 10px 20px;
-            background: linear-gradient(to right, #f7c04a, #f78c1c);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-
-            &:hover {
-                opacity: 0.9;
-            }
-        }
     }
 }
 
@@ -95,16 +81,50 @@
     }
 }
 
+.search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 500px;
+    padding: 20px 50px 0;
+    gap: 10px;
+
+    input {
+        width: 300px;
+        padding: 10px 15px;
+        border-radius: 20px;
+        flex: 1;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        outline: none;
+
+        &:focus {
+            border-color: #f78c1c;
+            box-shadow: 0 0 5px rgba(247, 140, 28, 0.4);
+        }
+    }
+
+    .clear-icon {
+        position: absolute;
+        right: 95px;
+        font-size: 16px;
+        color: #aaa;
+        cursor: pointer;
+        transition: color 0.2s;
+
+        &:hover {
+            color: #333;
+        }
+    }
+}
+
+
 .pagination {
     display: flex;
     justify-content: center;
     gap: 10px;
     padding: 20px;
     margin-bottom: 6px;
-
-    .btn {
-        background: linear-gradient(to right, #f7c04a, #f78c1c);
-    }
 
     .pagination-btn {
         padding: 10px 20px;

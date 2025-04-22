@@ -3,11 +3,12 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../service/api.service';
 import { NgFor, NgIf } from '@angular/common';
 import { ToastService } from '../../shared/toast.service';
+import { FormsModule } from '@angular/forms';
 
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, NgFor, NgIf],
+  imports: [RouterLink, NgFor, NgIf, FormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -21,7 +22,7 @@ export class HomeComponent {
 
   blogList: any = [];
   isLoading = true;
-
+  searchQuery: string = '';
   currentPage = 1;
   limit = 8;
   totalCount = 0;
@@ -41,9 +42,9 @@ export class HomeComponent {
     this.fetchBlogs();
   }
 
-  fetchBlogs(page: number = 1) {
+  fetchBlogs(page: number = 1, search: string = '') {
     this.isLoading = true;
-    this.apiService.getBlogList(page, this.limit).subscribe({
+    this.apiService.getBlogList(page, this.limit, search).subscribe({
       next: (data: any) => {
         this.blogList = data.data.postData;
         this.totalCount = data.data.total;
@@ -67,7 +68,15 @@ export class HomeComponent {
     return Math.ceil(this.totalCount / this.limit);
   }
 
-  get pages(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+
+  onSearch() {
+    this.fetchBlogs(1, this.searchQuery.trim());
   }
+
+  clearSearch() {
+    this.searchQuery = '';
+    this.onSearch();
+  }
+
+
 }

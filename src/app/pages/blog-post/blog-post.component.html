@@ -1,13 +1,19 @@
 <div class="my-blogs-container">
 
     <div class="top-bar">
-
         <h2>
             <span><img src="previous.png" alt="Back" class="back-arrow" routerLink="/" /></span>
             <span>My Blogs</span>
         </h2>
+        <div class="search-bar">
+            <input type="text" placeholder="Search blogs..." [(ngModel)]="searchQuery" (keyup.enter)="onSearch()" />
+            <span class="clear-icon" *ngIf="searchQuery" (click)="clearSearch()" title="Clear">
+                ✕
+            </span>
+            <button class="primary-btn" (click)="onSearch()">Search</button>
+        </div>
 
-        <button class="add-blog-btn" (click)="addBlog()">Add New Blog</button>
+        <button class="primary-btn" (click)="addBlog()">Add New Blog</button>
     </div>
 
     <div *ngIf="isLoading" class="loader-wrapper">
@@ -15,7 +21,7 @@
     </div>
     <div *ngIf="!isLoading && userblogsList.length === 0" class="no-blogs-message">
         <p>Looks like your blog is empty. Go ahead and add your first post!</p>
-        <button routerLink="/" class="add-blog-btn">← Back to Home</button>
+        <button routerLink="/" class="primary-btn">← Back to Home</button>
     </div>
     <div class="blog-container" *ngIf="!isLoading && userblogsList.length > 0">
         <div class="blog-card" *ngFor="let blog of userblogsList">
@@ -26,7 +32,7 @@
                 <div class="topics">
                     <span class="topic" *ngFor="let topic of blog.topics">{{ topic }}</span>
                 </div>
-                <button [routerLink]="['/blog-post', blog.blogPostId]" class="read-more">Read more</button>
+                <button [routerLink]="['/blog-post', blog.blogPostId]" class="primary-btn">Read more</button>
 
 
                 <div class="card-actions">
@@ -41,9 +47,8 @@
             Prev
         </button>
 
-        <button class="pagination-btn " *ngFor="let page of pages" (click)="onPageChange(page)"
-            [class.active]="currentPage === page">
-            {{ page }}
+        <button class="primary-btn">
+            {{ currentPage }}
         </button>
 
         <button class="pagination-btn " (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
@@ -80,7 +85,7 @@
                 <div class="error" *ngIf="formErrors.description">Description is required</div>
                 <div class="model-btn">
                     <button type="submit" [disabled]="isUploading">
-                        {{ isUploading ? 'Wait Image Uploading...' : (selectedBlog ? 'Update' : 'Create') }}
+                        {{ isUploading ? 'Image Uploading...' : (selectedBlog ? 'Update' : 'Create') }}
                     </button>
                     <button type="button" (click)="closeModal()">Cancel</button>
                 </div>

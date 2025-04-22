@@ -25,6 +25,7 @@ export class BlogPostComponent {
   isLoading = true;
   isUploading = false
   blogPostId: string = "";
+  searchQuery: string = '';
   currentPage = 1;
   limit = 8;
   totalCount = 0;
@@ -59,8 +60,8 @@ export class BlogPostComponent {
 
 
 
-  getBlogData(page: number = 1) {
-    this.apiService.getUserBlogs(page, this.limit).subscribe({
+  getBlogData(page: number = 1, search: string = '') {
+    this.apiService.getUserBlogs(page, this.limit, search).subscribe({
       next: (data: any) => {
         console.log(data, "User Blog Post Data")
         this.userblogsList = data.data.postData;
@@ -213,8 +214,13 @@ export class BlogPostComponent {
     return Math.ceil(this.totalCount / this.limit);
   }
 
-  get pages(): number[] {
-    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+  onSearch() {
+    this.getBlogData(1, this.searchQuery.trim());
+  }
+
+  clearSearch() {
+    this.searchQuery = '';
+    this.onSearch();
   }
 
 }
