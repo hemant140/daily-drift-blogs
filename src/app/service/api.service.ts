@@ -12,8 +12,8 @@ export class ApiService {
 
   baseUrl: string = "http://localhost:7001/api/v1";
 
-  getBlogList(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/blog-post`);
+  getBlogList(page: number, limit: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/blog-post?page=${page}&limit=${limit}`);
   }
 
   loginUser(payload: any): Observable<any> {
@@ -24,13 +24,13 @@ export class ApiService {
     return this.http.post(`${this.baseUrl}/auth/signup`, payload);
   }
 
-  getUserBlogs(): Observable<any> {
+  getUserBlogs(page: number, limit: number): Observable<any> {
     const token = localStorage.getItem('daily_drift_token');
     const headers = {
       'Authorization': `Bearer ${token}`
     };
 
-    return this.http.get(`${this.baseUrl}/blog-post/user-posts`, { headers });
+    return this.http.get(`${this.baseUrl}/blog-post/user-posts?page=${page}&limit=${limit}`, { headers });
   }
 
   getBlogById(blogPostId: any): Observable<any> {

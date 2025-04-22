@@ -59,8 +59,8 @@ export class LoginComponent {
           this.router.navigate(['/']);
         },
         error: (err) => {
-          console.error('Login failed:', err);
-          this.toastService.showToast('Failed to login. Please try again later.', "error");
+          console.error('Login failed:', err.error.message);
+          this.toastService.showToast(err.error.message || 'Failed to login. Please try again later.', "error");
         }
       });
     }

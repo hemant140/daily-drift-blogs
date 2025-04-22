@@ -22,12 +22,15 @@ export class HomeComponent {
   blogList: any = [];
   isLoading = true;
 
+  currentPage = 1;
+  limit = 8;
+  totalCount = 0;
+
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const token = params['token'];
-      const name = params['name']
-      const avatar = params['avatar']
-      console.log({ name, avatar }, "user data", token)
+      const name = params['name'];
+      const avatar = params['avatar'];
       if (token) {
         localStorage.setItem('daily_drift_token', token);
         localStorage.setItem('daily_drift_user', JSON.stringify({ name, avatar }));
@@ -35,18 +38,36 @@ export class HomeComponent {
       }
     });
 
-    this.apiService.getBlogList().subscribe({
+    this.fetchBlogs();
+  }
+
+  fetchBlogs(page: number = 1) {
+    this.isLoading = true;
+    this.apiService.getBlogList(page, this.limit).subscribe({
       next: (data: any) => {
-        console.log(data, ": blog data")
-        this.blogList = data.data;
+        this.blogList = data.data.postData;
+        this.totalCount = data.data.total;
+        this.currentPage = page;
         this.isLoading = false;
       },
-      error: (err) => {
+      error: () => {
         this.toastService.showToast('Failed to load blogs. Please try again later.', "error");
         this.isLoading = false;
       }
     });
+  }
 
+  onPageChange(page: number) {
+    if (page !== this.currentPage) {
+      this.fetchBlogs(page);
+    }
+  }
 
+  get totalPages(): number {
+    return Math.ceil(this.totalCount / this.limit);
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 }

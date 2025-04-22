@@ -31,6 +31,20 @@
             </div>
         </div>
     </div>
+    <div class="pagination" *ngIf="!isLoading && totalCount > limit">
+        <button class="pagination-btn " (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+            Prev
+        </button>
+
+        <button class="pagination-btn " *ngFor="let page of pages" (click)="onPageChange(page)"
+            [class.active]="currentPage === page">
+            {{ page }}
+        </button>
+
+        <button class="pagination-btn " (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
+            Next
+        </button>
+    </div>
 
     <div class="modal" [class.show]="showModal">
         <div class="modal-content">
@@ -42,23 +56,26 @@
 
                 <label>Tag</label>
                 <input type="text" placeholder="Tag" [(ngModel)]="form.tag" name="tag" required />
-                <div class="error" *ngIf="formErrors.title">Tag is required</div>
+                <div class="error" *ngIf="formErrors.tag">Tag is required</div>
 
                 <label>Topics</label>
                 <input type="text" placeholder="Topics (comma separated)" [(ngModel)]="form.topics" name="topics" />
-                <div class="error" *ngIf="formErrors.title">Topics is required</div>
+                <div class="error" *ngIf="formErrors.topics">Topics is required</div>
 
                 <label>Blog Image</label>
-                <input type="file" (change)="onImageChange($event)" />
-                <div class="error" *ngIf="formErrors.title">Blog image is required</div>
+                <input type="file" (change)="onImageChange($event)" #fileInput />
+                <div *ngIf="form.image" class="image-preview">
+                    <img [src]="form.image" alt="Blog Image" width="150" height="100" />
+                </div>
+                <div class="error" *ngIf="formErrors.image">Blog image is required</div>
 
                 <label>Description</label>
                 <textarea placeholder="Description" [(ngModel)]="form.description" rows="10" name="description"
                     required></textarea>
-                <div class="error" *ngIf="formErrors.title">Description is required</div>
+                <div class="error" *ngIf="formErrors.description">Description is required</div>
                 <div class="model-btn">
                     <button type="submit" [disabled]="isUploading">
-                        {{ isUploading ? 'Image Uploading...' : (selectedBlog ? 'Update' : 'Create') }}
+                        {{ isUploading ? 'Wait Image Uploading...' : (selectedBlog ? 'Update' : 'Create') }}
                     </button>
                     <button type="button" (click)="closeModal()">Cancel</button>
                 </div>

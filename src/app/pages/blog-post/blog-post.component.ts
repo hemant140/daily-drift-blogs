@@ -1,5 +1,5 @@
 import { NgFor, NgIf } from '@angular/common';
-import { Component, NgModule } from '@angular/core';
+import { Component, ElementRef, NgModule, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ApiService } from '../../service/api.service';
 import { ToastService } from '../../shared/toast.service';
@@ -20,10 +20,14 @@ export class BlogPostComponent {
     private toastService: ToastService
   ) { }
 
+  @ViewChild('fileInput') fileInput!: ElementRef;
   userblogsList: any = [];
   isLoading = true;
   isUploading = false
   blogPostId: string = "";
+  currentPage = 1;
+  limit = 8;
+  totalCount = 0;
 
   selectedBlog: any = null;
   showModal: boolean = false;
@@ -53,11 +57,15 @@ export class BlogPostComponent {
 
   }
 
-  getBlogData() {
-    this.apiService.getUserBlogs().subscribe({
+
+
+  getBlogData(page: number = 1) {
+    this.apiService.getUserBlogs(page, this.limit).subscribe({
       next: (data: any) => {
         console.log(data, "User Blog Post Data")
-        this.userblogsList = data.data;
+        this.userblogsList = data.data.postData;
+        this.totalCount = data.data.total;
+        this.currentPage = page;
         this.isLoading = false;
       },
       error: (err) => {
@@ -100,6 +108,9 @@ export class BlogPostComponent {
       image: false
     };
     this.form = { title: '', description: '', tag: '', topics: '', image: '' };
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
     this.showModal = true;
   }
 
@@ -124,6 +135,7 @@ export class BlogPostComponent {
   }
 
   handleSubmit() {
+    console.log(this.form.description, "dfdsd")
     this.formErrors = {
       title: !this.form.title.trim(),
       description: !this.form.description.trim(),
@@ -150,10 +162,11 @@ export class BlogPostComponent {
         next: (data: any) => {
           this.toastService.showToast('Blog updated successfully ', "success");
           this.getBlogData()
+          this.closeModal();
         },
         error: (err) => {
           console.error("Error occur in update blog", err)
-          this.toastService.showToast('Failed to update blog. Please try again later.', "error");
+          this.toastService.showToast(err.error.message || 'Failed to update blog. Please try again later.', "error");
         }
       });
     } else {
@@ -161,15 +174,15 @@ export class BlogPostComponent {
         next: (data: any) => {
           this.toastService.showToast('Blog created successfully ', "success");
           this.getBlogData()
+          this.closeModal();
         },
         error: (err) => {
           console.error("Error occur in create blog", err)
-          this.toastService.showToast('Failed to create blog. Please try again later.', "error");
+          this.toastService.showToast(err.error.message || 'Failed to create blog. Please try again later.', "error");
         }
       });
     }
 
-    this.closeModal();
   }
 
   deleteBlog(blogPostId: string) {
@@ -188,6 +201,20 @@ export class BlogPostComponent {
 
   closeModal() {
     this.showModal = false;
+  }
+
+  onPageChange(page: number) {
+    if (page !== this.currentPage) {
+      this.getBlogData(page);
+    }
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.totalCount / this.limit);
+  }
+
+  get pages(): number[] {
+    return Array.from({ length: this.totalPages }, (_, i) => i + 1);
   }
 
 }
