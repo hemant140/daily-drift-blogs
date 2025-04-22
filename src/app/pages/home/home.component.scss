@@ -102,6 +102,10 @@
     padding: 20px;
     margin-bottom: 6px;
 
+    .btn {
+        background: linear-gradient(to right, #f7c04a, #f78c1c);
+    }
+
     .pagination-btn {
         padding: 10px 20px;
         border: none;
@@ -111,12 +115,6 @@
 
         &:hover {
             opacity: 0.9;
-        }
-
-        &.active {
-            background: linear-gradient(to right, #f7c04a, #f78c1c);
-            color: white;
-
         }
 
         &:disabled {

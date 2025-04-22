@@ -3,6 +3,7 @@
         <div class="loader"></div>
     </div>
 
+
     <div class="blog-container" *ngIf="!isLoading && blogList.length > 0">
         <div class="blog-card" *ngFor="let blog of blogList">
             <img [src]="blog.image" alt="Blog Image" />
@@ -17,14 +18,19 @@
         </div>
     </div>
     <div class="pagination" *ngIf="!isLoading && totalCount > limit">
-        <button class="pagination-btn " (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+        <button class="pagination-btn" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
             Prev
         </button>
 
-        <button class="pagination-btn " *ngFor="let page of pages" (click)="onPageChange(page)"
+        <!-- <button class="pagination-btn " *ngFor="let page of pages" (click)="onPageChange(page)"
             [class.active]="currentPage === page">
             {{ page }}
+        </button> -->
+
+        <button class="pagination-btn btn">
+            {{ currentPage }}
         </button>
+
 
         <button class="pagination-btn " (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
             Next
