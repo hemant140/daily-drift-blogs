@@ -19,10 +19,10 @@ npm install -g @angular/cli
 ```
 2. Clone the repository
 ```bash
-git clone https://github.com/your-username/angular-blog-frontend
+[git clone https://github.com/hemant140/daily-drift-blogs]
 ```
 ```bash
-cd angular-blog-frontend
+cd daily-drift-blogs
 ```
 3. Install dependencies
 ```bash
