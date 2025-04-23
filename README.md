@@ -38,6 +38,19 @@ Then open your browser:
 http://localhost:4200
 ```
 
+## Testing Credential Accounts
+
+```bash
+hemant2@gmail.com
+1234
+
+hemant3@gmail.com
+1234
+
+test@gmail.com
+test
+```
+
 ## Routing Summary
 #### Public Routes
 - http://localhost:4200 - Home page showing all blog posts
